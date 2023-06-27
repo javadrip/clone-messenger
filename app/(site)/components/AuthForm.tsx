@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { BsGithub, BsGoogle } from "react-icons/bs";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 import Input from "../../components/inputs/Input";
 import Button from "../../components/Button";
@@ -40,7 +41,9 @@ const AuthForm = () => {
 
     if (variant === "REGISTER") {
       // /api/register because of folder structure
-      axios.post("/api/register", data);
+      axios
+        .post("/api/register", data)
+        .catch(() => toast.error("Something went wrong"));
     }
 
     if (variant === "LOGIN") {
