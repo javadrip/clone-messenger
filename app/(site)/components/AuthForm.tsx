@@ -20,12 +20,14 @@ const AuthForm = () => {
   const [variant, setVariant] = useState<Variant>("LOGIN");
   const [isLoading, setIsLoading] = useState(false);
 
+  // If user is authenticated, redirect to /users
   useEffect(() => {
     if (session?.status === "authenticated") {
       router.push("/users");
     }
   }, [session?.status, router]);
 
+  // Toggle between login and register at the foot of the form
   const toggleVariant = useCallback(() => {
     if (variant === "LOGIN") {
       setVariant("REGISTER");
@@ -34,6 +36,7 @@ const AuthForm = () => {
     }
   }, [variant]);
 
+  // react-hook-form
   const {
     register,
     handleSubmit,
@@ -46,18 +49,22 @@ const AuthForm = () => {
     },
   });
 
+  // onSubmit function for the form
   const onSubmit: SubmitHandler<FieldValues> = data => {
     setIsLoading(true);
 
+    // If variant is REGISTER, send a POST request to /api/register
     if (variant === "REGISTER") {
       // /api/register because of folder structure
       axios
         .post("/api/register", data)
+        // Signs users in after registration
         .then(() => signIn("credentials", data))
         .catch(() => toast.error("Something went wrong"))
         .finally(() => setIsLoading(false));
     }
 
+    // If variant is LOGIN, send a POST request to /api/login
     if (variant === "LOGIN") {
       signIn("credentials", {
         ...data,
@@ -77,6 +84,7 @@ const AuthForm = () => {
     }
   };
 
+  // Social login function that takes a string of either "github" or "google"
   const socialAction = (action: string) => {
     setIsLoading(true);
 
