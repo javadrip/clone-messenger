@@ -25,9 +25,11 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
   const session = useSession();
   const router = useRouter();
 
+  console.log(data.id);
+
   const handleClick = useCallback(() => {
     router.push(`/conversations/${data.id}`);
-  }, [data, router]);
+  }, [data.id, router]);
 
   // Fetch the last message sent in the conversation
   const lastMessage = useMemo(() => {
