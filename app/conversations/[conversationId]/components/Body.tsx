@@ -1,6 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+
+import axios from "axios";
 
 import useConversation from "@/app/hooks/useConversation";
 import { FullMessageType } from "@/app/types";
@@ -19,10 +21,15 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   // Extracts the conversationId
   const { conversationId } = useConversation();
 
+  useEffect(() => {
+    axios.post(`/api/conversations/${conversationId}/seen`);
+  }, [conversationId]);
+
   return (
     <div className="flex-1 overflow-y-auto">
       {messages.map((message, i) => (
         <MessageBox
+          // Current message is the last message in the conversation
           isLast={i === messages.length - 1}
           key={message.id}
           data={message}
