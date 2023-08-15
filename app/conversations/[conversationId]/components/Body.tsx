@@ -13,8 +13,10 @@ interface BodyProps {
 
 const Body: React.FC<BodyProps> = ({ initialMessages }) => {
   const [messages, setMessages] = useState(initialMessages);
+  // bottomRef facilitates scrolling to the bottom of the chat when the user gets a new message
   const bottomRef = useRef<HTMLDivElement>(null);
 
+  // Extracts the conversationId
   const { conversationId } = useConversation();
 
   return (
@@ -26,6 +28,7 @@ const Body: React.FC<BodyProps> = ({ initialMessages }) => {
           data={message}
         />
       ))}
+      {/* Exists only to facilitate scrolling to the bottom of the chat when the user gets a new message */}
       <div ref={bottomRef} className="pt-24" />
     </div>
   );
