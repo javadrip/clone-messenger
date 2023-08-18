@@ -9,11 +9,11 @@ import { Dialog, Transition } from "@headlessui/react";
 
 import useOtherUser from "@/app/hooks/useOtherUser";
 import Avatar from "@/app/components/Avatar";
+import Modal from "@/app/components/Modal";
 
 // import useActiveList from "@/app/hooks/useActiveList";
 
 // import AvatarGroup from "@/app/components/AvatarGroup";
-// import ConfirmModal from "./ConfirmModal";
 
 interface ProfileDrawerProps {
   isOpen: boolean;
@@ -52,10 +52,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
 
   return (
     <>
-      {/* <ConfirmModal
-        isOpen={confirmOpen}
-        onClose={() => setConfirmOpen(false)}
-      /> */}
+      <Modal isOpen={confirmOpen} onClose={() => setConfirmOpen(false)} />
       <Transition.Root show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={onClose}>
           <Transition.Child
